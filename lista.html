@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Família Organiza++</title>
+    <link rel="stylesheet" href="css/styles.min.css">
+    <link rel="stylesheet" href="css/cmd-theme.min.css">
+    <link rel="manifest" href="manifest.json">
+</head>
+<body>
+    <!-- Terminal-style Auth -->
+    <div id="authTerminal" class="cmd-terminal">
+        <div class="terminal-glitch"></div>
+        <div class="terminal-header">
+            <span>🔒 Família Organiza++ v3.0</span>
+            <div class="terminal-controls">
+                <span class="close" onclick="terminalEffect('shutdown')">×</span>
+            </div>
+        </div>
+        <div class="terminal-body">
+            <div class="scanline"></div>
+            <p class="crt-effect">> Inicializando sistema...</p>
+            <div class="password-prompt crt-effect">
+                <span class="prompt-blinking">></span>
+                <input type="password" id="masterPassword" 
+                       autocomplete="off"
+                       placeholder="Senha Mestra"
+                       data-cy="password-input"
+                       @keyup.enter="attemptLogin">
+            </div>
+            <div class="hint-container">
+                <p class="crt-hint" data-hint="Dica: Comece com 'familia'"></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application -->
+    <main id="appContainer" class="container" hidden>
+        <div class="watermark">DevFerreiraG</div>
+        
+        <!-- Collaborative Header -->
+        <header class="app-header">
+            <div class="user-presence">
+                <span class="user-badge" data-user="user1">👤 User1</span>
+                <span class="sync-status" id="syncStatus"></span>
+            </div>
+            <h1 class="app-title">🛒 Lista Colaborativa</h1>
+            <div class="header-controls">
+                <button class="icon-btn" @click="toggleTheme" title="Alternar tema">
+                    <span class="theme-icon">🌗</span>
+                </button>
+                <button class="icon-btn" @click="showSyncConfig" title="Configurações">
+                    ⚙️
+                </button>
+            </div>
+        </header>
+
+        <!-- Dynamic Task Input -->
+        <section class="task-creator">
+            <div class="drag-drop-zone" @drop="handleDrop" @dragover.prevent>
+                <input type="text" 
+                       id="taskInput" 
+                       class="task-input"
+                       placeholder="Nova tarefa..."
+                       data-cy="task-input"
+                       @keyup.enter="addTask">
+                <div class="priority-selector">
+                    <button v-for="priority in priorities" 
+                            :key="priority.id"
+                            :class="['priority-btn', priority.level]"
+                            @click="currentPriority = priority.level">
+                        {{ priority.emoji }} {{ priority.label }}
+                    </button>
+                </div>
+                <button class="add-btn" @click="addTask" data-cy="add-task">
+                    ➕ Adicionar
+                </button>
+            </div>
+        </section>
+
+        <!-- Interactive Task List -->
+        <section class="task-board">
+            <div class="sort-controls">
+                <button class="sort-btn" @click="sortTasks('priority')">
+                    🔀 Prioridade
+                </button>
+                <button class="sort-btn" @click="sortTasks('updatedAt')">
+                    📅 Recentes
+                </button>
+            </div>
+            
+            <ul id="taskList" class="task-list" 
+                @dragover.prevent 
+                @drop="handleListDrop">
+                <li v-for="(task, index) in tasks" 
+                    :key="task.id"
+                    :class="['task-item', task.priority, {dragging: task.dragging}]"
+                    :data-priority="task.priority"
+                    :data-cy="`task-${task.priority}`"
+                    draggable="true"
+                    @dragstart="startDrag(index)"
+                    @dragend="endDrag"
+                    @dblclick="editTask(task.id)">
+                    <span class="task-grip">☰</span>
+                    <span class="task-text">{{ task.text }}</span>
+                    <div class="task-meta">
+                        <span class="task-date">{{ formatDate(task.updatedAt) }}</span>
+                        <button class="task-delete" @click="deleteTask(task.id)">
+                            🗑️
+                        </button>
+                    </div>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Database Sync Panel -->
+        <div class="sync-panel" id="syncPanel">
+            <h3>🔌 Conectar Banco de Dados</h3>
+            <div class="sync-options">
+                <select id="dbType" class="db-select">
+                    <option value="rest">REST API</option>
+                    <option value="firebase">Firebase</option>
+                    <option value="php">PHP/MySQL</option>
+                </select>
+                <input type="url" 
+                       id="dbEndpoint" 
+                       class="db-input"
+                       placeholder="Endpoint URL"
+                       pattern="https://.*">
+            </div>
+            <div class="sync-actions">
+                <button class="sync-btn" @click="testConnection">
+                    🧪 Testar Conexão
+                </button>
+                <button class="sync-btn" @click="saveConfig">
+                    💾 Salvar Config
+                </button>
+                <button class="sync-btn" @click="toggleSync">
+                    🔄 Sincronizar
+                </button>
+            </div>
+            <div class="sync-status" id="syncStatus"></div>
+        </div>
+    </main>
+
+    <!-- Application Scripts -->
+    <script src="js/vue.global.prod.js"></script>
+    <script src="js/axios.min.js"></script>
+    <script src="js/auth.service.js" type="module"></script>
+    <script src="js/db.service.js" type="module"></script>
+    <script src="js/task.manager.js" type="module"></script>
+    <script src="js/app.init.js" type="module"></script>
+    <script>
+        // Service Worker Registration
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('/sw.js');
+        }
+    </script>
+</body>
+</html>

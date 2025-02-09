@@ -1,0 +1,47 @@
+.cmd-terminal {
+  background-color: #000;
+  color: #0f0;
+  font-family: "Courier New", Courier, monospace;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.cmd-terminal .terminal-header {
+  font-size: 20px;
+  margin-bottom: 20px;
+}
+
+.cmd-terminal .terminal-body {
+  width: 300px;
+  text-align: center;
+}
+
+.cmd-terminal input[type="password"] {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  font-size: 16px;
+  background-color: #222;
+  border: 1px solid #0f0;
+  color: #0f0;
+}
+
+.cmd-terminal button {
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #0f0;
+  color: #000;
+  border: none;
+  cursor: pointer;
+}
+
+.cmd-terminal .error {
+  color: #f00;
+} 
