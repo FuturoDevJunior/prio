@@ -17,6 +17,6 @@ app.get('/', (req, res) => {
     res.send('Servidor funcionando corretamente!');
 });
 app.listen(port, () => {
-    console.log(`Servidor escutando na porta ${port}`);
+    console.log(`Servidor executando na porta ${port}`);
 });
 //# sourceMappingURL=server.js.map

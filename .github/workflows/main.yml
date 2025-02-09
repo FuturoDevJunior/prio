@@ -7,6 +7,7 @@ on:
   pull_request:
     branches:
       - main
+  workflow_dispatch: {}
 
 jobs:
   build:
@@ -26,4 +27,14 @@ jobs:
           npm run build || echo "npm run build não configurado."
           npm test || echo "npm test não configurado."
       - name: Display Watermark
-        run: 'echo "Desenvolvido por FuturoDevJunior - LinkedIn: https://www.linkedin.com/in/DevFerreiraG"' 
+        run: 'echo "Desenvolvido por FuturoDevJunior - LinkedIn: https://www.linkedin.com/in/DevFerreiraG"'
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Deploy Application
+        run: npm run deploy || echo "npm run deploy não está configurado." 
