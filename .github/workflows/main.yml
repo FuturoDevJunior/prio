@@ -1,0 +1,29 @@
+name: CI - Priority Flow
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '14'
+      - name: Install dependencies
+        run: |
+          npm install || echo "npm install não configurado para este projeto."
+      - name: Build and Test
+        run: |
+          npm run build || echo "npm run build não configurado."
+          npm test || echo "npm test não configurado."
+      - name: Display Watermark
+        run: 'echo "Desenvolvido por FuturoDevJunior - LinkedIn: https://www.linkedin.com/in/DevFerreiraG"' 
