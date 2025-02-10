@@ -38,3 +38,15 @@ a:hover {
 section {
     margin-bottom: 2rem;
 }
+
+
+/* Watermark for DevFerreiraG */
+
+.watermark {
+    position: fixed;
+    bottom: 10px;
+    right: 10px;
+    opacity: 0.3;
+    font-size: 1.5rem;
+    z-index: 1000;
+}

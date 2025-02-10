@@ -3,16 +3,19 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Família Organiza++: uma aplicação colaborativa para gerenciamento de tarefas.">
     <title>Família Organiza++</title>
     <link rel="stylesheet" href="css/styles.min.css">
     <link rel="stylesheet" href="css/cmd-theme.min.css">
     <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+    <link rel="icon" href="/favicon.ico">
     <link rel="manifest" href="manifest.json">
 </head>
 
 <body>
-    <!-- Terminal-style Auth -->
+    <!-- Terminal-style Authentication -->
     <div id="authTerminal" class="cmd-terminal">
         <div class="terminal-glitch"></div>
         <div class="terminal-header">
@@ -42,7 +45,8 @@
         <header class="app-header">
             <div class="user-presence">
                 <span class="user-badge" data-user="user1">👤 User1</span>
-                <span class="sync-status" id="syncStatus"></span>
+                <!-- Renamed from "syncStatus" to "headerSyncStatus" to avoid duplicate IDs -->
+                <span class="sync-status" id="headerSyncStatus"></span>
             </div>
             <h1 class="app-title">🛒 Lista Colaborativa</h1>
             <div class="header-controls">
@@ -85,7 +89,7 @@
             </div>
 
             <ul id="taskList" class="task-list" @dragover.prevent @drop="handleListDrop">
-                <li v-for="(task, index) in tasks" :key="task.id" :class="['task-item', task.priority, {dragging: task.dragging}]" :data-priority="task.priority" :data-cy="`task-${task.priority}`" draggable="true" @dragstart="startDrag(index)" @dragend="endDrag" @dblclick="editTask(task.id)">
+                <li v-for="(task, index) in tasks" :key="task.id" :class="['task-item', task.priority, { dragging: task.dragging }]" :data-priority="task.priority" :data-cy="`task-${task.priority}`" draggable="true" @dragstart="startDrag(index)" @dragend="endDrag" @dblclick="editTask(task.id)">
                     <span class="task-grip">☰</span>
                     <span class="task-text">{{ task.text }}</span>
                     <div class="task-meta">
@@ -120,8 +124,52 @@
                     🔄 Sincronizar
                 </button>
             </div>
+            <!-- This element keeps the original "syncStatus" ID -->
             <div class="sync-status" id="syncStatus"></div>
         </div>
+
+        <div class="family-dashboard">
+            <!-- Add family photo section -->
+            <div class="family-header">
+                <input type="file" id="family-photo-upload" hidden />
+                <img src="default-family.jpg" alt="Foto da Família" class="family-photo" onclick="document.getElementById('family-photo-upload').click()" />
+                <h1>Prioridades da Família Ferreira</h1>
+            </div>
+
+            <!-- Interactive task board -->
+            <div class="task-board">
+                <div class="task-column" id="pending-tasks">
+                    <h2>⏳ Pendentes</h2>
+                    <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+
+                <div class="task-column" id="completed-tasks">
+                    <h2>✅ Concluídas</h2>
+                    <div class="task-list" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+                </div>
+            </div>
+
+            <!-- Decision roulette -->
+            <div class="roulette-container">
+                <button onclick="spinRoulette()">🎯 Não conseguem decidir? Gire a roleta!</button>
+                <div id="roulette-result"></div>
+            </div>
+        </div>
+
+        <!-- Seção de Prioridades Familiares -->
+        <section class="family-priorities">
+            <div class="priority-card couple-mode">
+                <h3>👩❤️👨 Modo Casal</h3>
+                <div class="dual-controls">
+                    <button class="sync-btn" onclick="startSyncSession()">
+                        🔄 Sincronizar Dispositivos
+                    </button>
+                    <button class="emergency-btn" onclick="showEmergencyPanel()">
+                        🚨 Prioridade Máxima
+                    </button>
+                </div>
+            </div>
+        </section>
     </main>
 
     <!-- Application Scripts -->
@@ -132,17 +180,23 @@
     <script src="js/task.manager.js" type="module"></script>
     <script src="js/app.init.js" type="module"></script>
     <script>
-        // Service Worker Registration
+        // Service Worker Registration with error handling
         if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('/sw.js');
+            navigator.serviceWorker.register('/sw.js')
+                .then(function(registration) {
+                    console.log('Service Worker registered with scope:', registration.scope);
+                })
+                .catch(function(error) {
+                    console.error('Service Worker registration failed:', error);
+                });
         }
     </script>
 
     <!-- Surprise Modal -->
-    <div id="surpriseModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999; align-items:center; justify-content:center;">
-        <div style="background:#fff; padding:20px; border-radius:8px; max-width:400px; text-align:center; font-family:sans-serif;">
-            <p id="surpriseMessage" style="font-size:18px; margin-bottom:20px;"></p>
-            <button onclick="closeSurprise()" style="padding:10px 20px; border:none; background:#007bff; color:#fff; border-radius:4px; cursor:pointer;">Fechar</button>
+    <div id="surpriseModal" class="surprise-modal">
+        <div class="surprise-modal-content">
+            <p id="surpriseMessage" class="surprise-message"></p>
+            <button onclick="closeSurprise()" class="btn-close">Fechar</button>
         </div>
     </div>
     <script>
@@ -162,6 +216,17 @@
         function closeSurprise() {
             document.getElementById('surpriseModal').style.display = "none";
         }
+    </script>
+
+    <!-- Deploy Commands:
+         npm install
+         npm run build
+         vercel --prod
+    -->
+
+    <script type="module">
+        // Configuração inicial do WebSocket const socket = new WebSocket('ws://localhost:8080'); // Sistema de notificações em tempo real socket.onmessage = ({ data }) => { const update = JSON.parse(data); if (update.type === 'TASKS_UPDATE') { refreshTaskList(update.tasks);
+        ; // Função para enviar atualizações function broadcastUpdate(updatedTasks) { socket.send(JSON.stringify({ type: 'TASKS_UPDATE', tasks: updatedTasks })); }
     </script>
 </body>
 
