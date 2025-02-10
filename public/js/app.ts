@@ -171,4 +171,19 @@ syncTasksBtn.addEventListener("click", () => {
 });
 
 // Renderiza a lista inicial (vazia)
-renderTasks(); 
+renderTasks();
+
+// Implementação correta do Drag & Drop
+function handleDragStart(e: Event): void {
+  const dragEvent = e as DragEvent;
+  const target = dragEvent.target as HTMLElement;
+  target.classList.add('dragging');
+  if (dragEvent.dataTransfer) {
+    dragEvent.dataTransfer.setData("text/plain", target.id);
+  }
+}
+
+const tasks = document.querySelectorAll('.task') as NodeListOf<HTMLElement>;
+tasks.forEach(task => {
+  task.addEventListener('dragstart', (e: Event) => handleDragStart(e));
+}); 

@@ -1,69 +1,38 @@
 <!DOCTYPE html>
-<html lang="pt-br">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Família Organiza++</title>
-  <link rel="stylesheet" href="css/styles.min.css">
-  <link rel="stylesheet" href="css/cmd-theme.min.css">
-</head>
-<body>
-  <!-- Tela de Autenticação (estilo terminal CMD) -->
-  <div id="authTerminal" class="cmd-terminal">
-    <div class="terminal-header">
-      <span>🔒 Família Organiza++ v3.0</span>
-    </div>
-    <div class="terminal-body">
-      <p class="prompt">> Inicializando sistema...</p>
-      <p class="prompt">> Por favor, insira a senha de acesso:</p>
-      <input type="password" id="authPassword" placeholder="Senha de Acesso" autofocus>
-      <button id="authButton">Entrar</button>
-      <p id="authError" class="error"></p>
-    </div>
-  </div>
+<html lang="pt">
 
-  <!-- Aplicação Principal -->
-  <main id="appContainer" class="container" hidden>
-    <div class="watermark">DevFerreiraG</div>
-    <header class="app-header">
-      <h1>🛒 Lista Colaborativa</h1>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DevFerreiraG | Portfolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header>
+        <h1>Olá, Eu sou DevFerreiraG</h1>
+        <p>Bem-vindo ao meu portfólio profissional.</p>
     </header>
 
-    <section class="task-creator">
-      <input type="text" id="taskInput" placeholder="Nova tarefa...">
-      <button id="addTaskButton">➕ Adicionar</button>
-      <div class="priority-selector">
-        <button class="priority-btn" data-priority="alta">🔴 Alta</button>
-        <button class="priority-btn" data-priority="media">🟡 Média</button>
-        <button class="priority-btn" data-priority="baixa">🟢 Baixa</button>
-      </div>
-    </section>
+    <main>
+        <section>
+            <h2>Sobre Mim</h2>
+            <p>
+                Sou um desenvolvedor apaixonado por tecnologia e inovação. Explore meus projetos e conecte-se para saber mais sobre minha experiência.
+            </p>
+        </section>
+        <section>
+            <h2>Contatos</h2>
+            <ul>
+                <li>GitHub: <a href="https://github.com/FuturoDevJunior" target="_blank">FuturoDevJunior</a></li>
+                <li>LinkedIn: <a href="https://www.linkedin.com/in/DevFerreiraG" target="_blank">/in/DevFerreiraG</a></li>
+            </ul>
+        </section>
+    </main>
 
-    <section class="task-board">
-      <ul id="taskList" class="task-list">
-        <!-- Tarefas serão adicionadas dinamicamente -->
-      </ul>
-    </section>
-
-    <section class="db-sync">
-      <h3>🔌 Conectar Banco de Dados</h3>
-      <div class="sync-options">
-        <select id="dbType">
-          <option value="rest">REST API</option>
-          <option value="firebase">Firebase</option>
-          <option value="php">PHP/MySQL</option>
-        </select>
-        <input type="url" id="dbEndpoint" placeholder="Endpoint URL" pattern="https://.*">
-      </div>
-      <div class="sync-actions">
-        <button id="testConnection">🧪 Testar Conexão</button>
-        <button id="saveConfig">💾 Salvar Config</button>
-        <button id="syncTasks">🔄 Sincronizar</button>
-      </div>
-      <p id="syncStatus"></p>
-    </section>
-  </main>
-
-  <script src="js/app.js"></script>
+    <footer>
+        <p>&copy; 2025 DevFerreiraG. Todos os direitos reservados.</p>
+    </footer>
 </body>
-</html> 
+
+</html>
