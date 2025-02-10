@@ -5,7 +5,7 @@
     "main": "dist/server/server.js",
     "type": "module",
     "scripts": {
-        "clean": "rimraf dist",
+        "clean": "npx rimraf dist",
         "build": "npm run clean && tsc",
         "css": "postcss public/css/styles.css -o public/css/styles.min.css",
         "start": "node dist/server/server.js",
@@ -31,6 +31,6 @@
         "postcss": "^8.4.21",
         "rimraf": "^5.0.0",
         "ts-node": "^10.9.1",
-        "typescript": "^5.0.4"
+        "typescript": "^5.7.3"
     }
 }

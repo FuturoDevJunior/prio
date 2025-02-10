@@ -46,6 +46,10 @@ app.use((err: any, req: express.Request, res: express.Response, next: express.Ne
   });
 });
 
-app.listen(port, () => {
-  console.log(`🚀 Servidor rodando em http://localhost:${port}`);
-}); 
+// Original listen call replaced for Vercel deployment
+if (!process.env.VERCEL) {
+  app.listen(port, () => {
+    console.log(`🚀 Servidor rodando em http://localhost:${port}`);
+  });
+}
+export default app; 
