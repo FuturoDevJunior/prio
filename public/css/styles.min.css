@@ -1,79 +1,41 @@
+/* Estilos mínimos e modernos para um visual clean */
+
 body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background-color: #f5f5f5;
-  color: #333;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-color: #f4f4f4;
+    color: #333;
 }
 
-.container {
-  padding: 20px;
+header,
+footer {
+    background-color: #333;
+    color: #fff;
+    padding: 1rem 2rem;
+    text-align: center;
 }
 
-.app-header {
-  text-align: center;
-  margin-bottom: 20px;
+header h1,
+footer p {
+    margin: 0;
 }
 
-.task-creator {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+main {
+    padding: 2rem;
 }
 
-#taskInput {
-  width: 80%;
-  padding: 10px;
-  margin-bottom: 10px;
-  font-size: 16px;
+a {
+    color: #06c;
+    text-decoration: none;
 }
 
-#addTaskButton {
-  padding: 10px 20px;
-  font-size: 16px;
-  cursor: pointer;
+a:hover {
+    text-decoration: underline;
 }
 
-.priority-selector {
-  margin-top: 10px;
+section {
+    margin-bottom: 2rem;
 }
-
-.priority-btn {
-  margin: 5px;
-  padding: 8px 12px;
-  border: none;
-  cursor: pointer;
-  border-radius: 4px;
-}
-
-.task-board {
-  margin-top: 20px;
-}
-
-.task-list {
-  list-style: none;
-  padding: 0;
-}
-
-.task-item {
-  background-color: #fff;
-  padding: 10px;
-  margin-bottom: 8px;
-  border-radius: 4px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  cursor: grab;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-}
-
-.task-item.dragging {
-  opacity: 0.5;
-}
-
-.watermark {
-  position: fixed;
-  bottom: 10px;
-  right: 10px;
-  opacity: 0.5;
-  font-size: 14px;
-} 
+/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbIi4uLy4uL3N0eWxlcy5jc3MiXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IkFBQUEiLCJmaWxlIjoic3R5bGVzLm1pbi5jc3MiLCJzb3VyY2VzQ29udGVudCI6WyIvKiBFc3RpbG9zIG3DrW5pbW9zIGUgbW9kZXJub3MgcGFyYSB1bSB2aXN1YWwgY2xlYW4gKi9cclxuXHJcbmJvZHkge1xyXG4gICAgZm9udC1mYW1pbHk6IEFyaWFsLCBzYW5zLXNlcmlmO1xyXG4gICAgbWFyZ2luOiAwO1xyXG4gICAgcGFkZGluZzogMDtcclxuICAgIGxpbmUtaGVpZ2h0OiAxLjY7XHJcbiAgICBiYWNrZ3JvdW5kLWNvbG9yOiAjZjRmNGY0O1xyXG4gICAgY29sb3I6ICMzMzM7XHJcbn1cclxuXHJcbmhlYWRlcixcclxuZm9vdGVyIHtcclxuICAgIGJhY2tncm91bmQtY29sb3I6ICMzMzM7XHJcbiAgICBjb2xvcjogI2ZmZjtcclxuICAgIHBhZGRpbmc6IDFyZW0gMnJlbTtcclxuICAgIHRleHQtYWxpZ246IGNlbnRlcjtcclxufVxyXG5cclxuaGVhZGVyIGgxLFxyXG5mb290ZXIgcCB7XHJcbiAgICBtYXJnaW46IDA7XHJcbn1cclxuXHJcbm1haW4ge1xyXG4gICAgcGFkZGluZzogMnJlbTtcclxufVxyXG5cclxuYSB7XHJcbiAgICBjb2xvcjogIzA2YztcclxuICAgIHRleHQtZGVjb3JhdGlvbjogbm9uZTtcclxufVxyXG5cclxuYTpob3ZlciB7XHJcbiAgICB0ZXh0LWRlY29yYXRpb246IHVuZGVybGluZTtcclxufVxyXG5cclxuc2VjdGlvbiB7XHJcbiAgICBtYXJnaW4tYm90dG9tOiAycmVtO1xyXG59Il19 */

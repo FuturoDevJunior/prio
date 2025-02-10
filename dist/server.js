@@ -6,9 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const path_1 = __importDefault(require("path"));
 const app = (0, express_1.default)();
-const port = process.env.PORT || 3000;
-// Serve arquivos estáticos a partir da pasta "public"
-app.use(express_1.default.static(path_1.default.join(__dirname, 'public')));
+const PORT = process.env.PORT || 3000;
+// Servir arquivos estáticos do diretório public
+app.use(express_1.default.static(path_1.default.join(__dirname, '../public')));
+// Redirecionar todas as rotas para index.html
+app.get('*', (req, res) => {
+    res.sendFile(path_1.default.join(__dirname, '../public/index.html'));
+});
 // Exemplo de endpoint para verificação
 app.get('/api/health', (req, res) => {
     res.json({ status: 'OK' });
@@ -16,7 +20,7 @@ app.get('/api/health', (req, res) => {
 app.get('/', (req, res) => {
     res.send('Servidor funcionando corretamente!');
 });
-app.listen(port, () => {
-    console.log(`Servidor executando na porta ${port}`);
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
 //# sourceMappingURL=server.js.map

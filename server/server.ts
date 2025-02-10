@@ -2,10 +2,15 @@ import express from 'express';
 import path from 'path';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3000;
 
-// Serve arquivos estáticos a partir da pasta "public"
-app.use(express.static(path.join(__dirname, 'public')));
+// Servir arquivos estáticos do diretório public
+app.use(express.static(path.join(__dirname, '../public')));
+
+// Redirecionar todas as rotas para index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/index.html'));
+});
 
 // Exemplo de endpoint para verificação
 app.get('/api/health', (req: express.Request, res: express.Response): void => {
@@ -16,6 +21,6 @@ app.get('/', (req, res) => {
   res.send('Servidor funcionando corretamente!');
 });
 
-app.listen(port, (): void => {
-  console.log(`Servidor executando na porta ${port}`);
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
 }); 
